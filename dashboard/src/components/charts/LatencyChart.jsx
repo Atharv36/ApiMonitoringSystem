@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import Chart from 'react-apexcharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui';
 import { useChartTheme } from '../../hooks/useChartTheme';
+import { chartPalette } from '../../lib/chartPalette';
 import styles from '../../styles/modules/charts/Charts.module.scss';
 
 export function LatencyChart({ data }) {
@@ -27,7 +28,7 @@ export function LatencyChart({ data }) {
                 formatter: (v) => `${v.toFixed(0)}ms`,
             },
         },
-        colors: ['#f59e0b', '#10b981'],
+        colors: [chartPalette.amber, chartPalette.blue],
         tooltip: {
             theme: chart.tooltipTheme,
             y: { formatter: (v) => `${v.toFixed(2)}ms` },
@@ -35,7 +36,7 @@ export function LatencyChart({ data }) {
         legend: { labels: { colors: chart.labelColor } },
         markers: {
             size: 4,
-            colors: ['#f59e0b', '#10b981'],
+            colors: [chartPalette.amber, chartPalette.blue],
             strokeWidth: 2,
             strokeColors: chart.strokeColor,
             hover: { size: 6 },

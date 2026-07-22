@@ -156,7 +156,7 @@
   .errorIcon {
     width: 4rem;
     height: 4rem;
-    background-color: rgba(239, 68, 68, 0.1);
+    background-color: hsl(var(--error) / 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -166,7 +166,7 @@
     svg {
       width: 2rem;
       height: 2rem;
-      color: rgb(239, 68, 68);
+      color: hsl(var(--error));
     }
   }
 

@@ -11,10 +11,10 @@ export function useTheme() {
 }
 
 const themes = {
-    purple: {
-        name: 'Purple',
-        description: 'Beautiful purple theme with glass effects',
-        class: 'theme-purple'
+    dark: {
+        name: 'Dark',
+        description: 'Professional dark theme for focused monitoring',
+        class: 'theme-dark'
     },
     light: {
         name: 'Light',
@@ -27,9 +27,9 @@ export function ThemeProvider({ children }) {
     const [currentTheme, setCurrentTheme] = useState(() => {
         if (typeof window !== 'undefined') {
             const savedTheme = localStorage.getItem('app-theme');
-            return (savedTheme && themes[savedTheme]) ? savedTheme : 'light';
+            return (savedTheme && themes[savedTheme]) ? savedTheme : 'dark';
         }
-        return 'light';
+        return 'dark';
     });
 
     useEffect(() => {

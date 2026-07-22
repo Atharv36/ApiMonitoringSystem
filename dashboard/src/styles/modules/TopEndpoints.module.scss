@@ -1,6 +1,6 @@
 .container {
-    border: 1px solid hsla(var(--border), 0.5);
-    background-color: hsla(var(--card), 0.5);
+    border: 1px solid hsl(var(--border) / 0.5);
+    background-color: hsl(var(--card) / 0.5);
     backdrop-filter: blur(8px);
 }
 
@@ -19,7 +19,7 @@
 .iconContainer {
     width: 2.5rem;
     height: 2.5rem;
-    background-color: hsla(var(--primary), 0.1);
+    background-color: hsl(var(--primary) / 0.1);
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
@@ -55,7 +55,7 @@
 .noDataIcon {
     width: 4rem;
     height: 4rem;
-    background-color: hsla(var(--muted), 0.5);
+    background-color: hsl(var(--muted) / 0.5);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -75,7 +75,7 @@
 
 .noDataSubtext {
     font-size: 0.875rem;
-    color: hsla(var(--muted-foreground), 0.6);
+    color: hsl(var(--muted-foreground) / 0.6);
     margin-top: 0.25rem;
 }
 
@@ -193,9 +193,9 @@
     }
 
     &.methodPatch {
-        background-color: hsla(var(--primary), 0.2);
+        background-color: hsl(var(--primary) / 0.2);
         color: hsl(var(--primary));
-        border-color: hsla(var(--primary), 0.5);
+        border-color: hsl(var(--primary) / 0.5);
     }
 
     &.methodDefault {
@@ -227,26 +227,26 @@
     justify-content: center;
 
     &.statIconBlue {
-        background-color: rgba(59, 130, 246, 0.1);
+        background-color: hsl(var(--chart-1) / 0.12);
 
         .statIconSvg {
-            color: #3b82f6;
+            color: hsl(var(--chart-1));
         }
     }
 
     &.statIconPurple {
-        background-color: rgba(168, 85, 247, 0.1);
+        background-color: hsl(var(--chart-5) / 0.12);
 
         .statIconSvg {
-            color: hsl(var(--primary));
+            color: hsl(var(--chart-5));
         }
     }
 
     &.statIconRed {
-        background-color: rgba(239, 68, 68, 0.1);
+        background-color: hsl(var(--error) / 0.12);
 
         .statIconSvg {
-            color: #ef4444;
+            color: hsl(var(--error));
         }
     }
 }
@@ -266,6 +266,6 @@
     font-weight: bold;
 
     &.errorRate {
-        color: #f87171;
+        color: hsl(var(--error));
     }
 }

@@ -22,7 +22,7 @@ export function DashboardLayout({ children, onLogout }) {
         queryClient.invalidateQueries({ queryKey: QUERY_KEYS.DASHBOARD });
     };
 
-    const themeClass = currentTheme === 'purple' ? styles.themePurple : styles.themeLight;
+    const themeClass = currentTheme === 'dark' ? styles.themeDark : styles.themeLight;
 
     return (
         <div className={`${styles.container} ${themeClass}`}>

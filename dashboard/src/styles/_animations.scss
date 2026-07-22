@@ -48,8 +48,8 @@
   animation: spin 1s linear infinite;
 }
 
-.theme-purple .animate-gradient {
-  background: linear-gradient(-45deg, #ee7724, #d8363a, #dd3675, #b44593);
+.theme-dark .animate-gradient {
+  background: linear-gradient(-45deg, #1d4ed8, #2563eb, #4338ca, #3730a3);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }

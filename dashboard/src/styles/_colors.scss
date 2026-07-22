@@ -1,167 +1,138 @@
+// ============================================================================
+// Design tokens (CSS custom properties)
+// ============================================================================
+// :root holds the Dark theme — the app's primary, default visual direction.
+// .theme-light overrides the same token set for the Light theme.
+// .theme-dark restates the root values explicitly so selectors that target
+// the active theme by class (see _animations.scss) always have something to
+// hook into, even though :root already renders dark by default.
+//
+// Color values are HSL triplets (no hsl() wrapper) so call sites compose
+// them as hsl(var(--token)) or hsl(var(--token) / <alpha>).
+// ============================================================================
+
 :root {
-  --background: 224 71% 4%;
-  --foreground: 213 31% 91%;
-  --muted: 223 47% 11%;
-  --muted-foreground: 215.4 16.3% 56.9%;
-  --popover: 224 71% 4%;
-  --popover-foreground: 215 20.2% 65.1%;
-  --card: 224 71% 4%;
-  --card-foreground: 213 31% 91%;
-  --border: 216 34% 17%;
-  --input: 216 34% 17%;
-  --primary: 263 70% 50%;
+  // Surface hierarchy (darkest to lightest)
+  --background: 222 22% 7%; // page background
+  --card: 222 20% 10%; // card / panel surface
+  --popover: 222 19% 13%; // elevated surface: dropdowns, tooltips, popovers
+  --muted: 217 16% 15%; // subtle fill surface
+
+  // Text
+  --foreground: 210 20% 93%;
+  --card-foreground: 210 20% 93%;
+  --popover-foreground: 210 20% 93%;
+  --muted-foreground: 215 12% 58%;
+
+  // Borders / inputs
+  --border: 217 15% 18%;
+  --input: 217 15% 18%;
+
+  // Interactive accent
+  --primary: 217 91% 60%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 222.2 47.4% 11.2%;
-  --secondary-foreground: 210 40% 98%;
-  --accent: 216 34% 17%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 63% 31%;
+  --secondary: 217 19% 16%;
+  --secondary-foreground: 210 20% 93%;
+  --accent: 217 19% 18%; // hover / active fill
+  --accent-foreground: 210 20% 93%;
+  --ring: 217 91% 60%;
+
+  // Status colors (used for API health, badges, alerts)
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 222 22% 10%;
+  --error: 0 72% 51%;
+  --error-foreground: 210 40% 98%;
+  --info: 199 89% 48%;
+  --info-foreground: 210 40% 98%;
+  --destructive: 0 72% 51%; // alias of --error, kept for existing components
   --destructive-foreground: 210 40% 98%;
-  --ring: 263 70% 50%;
+
+  // Chart series palette (kept independent of --primary so charts stay
+  // legible regardless of accent changes)
+  --chart-1: 217 91% 60%; // blue
+  --chart-2: 142 71% 45%; // green
+  --chart-3: 38 92% 50%; // amber
+  --chart-4: 0 72% 51%; // red
+  --chart-5: 262 83% 66%; // violet
+  --chart-6: 199 89% 48%; // cyan
+
   --radius: 0.5rem;
 
+  // Decorative tokens
   --theme-background: linear-gradient(
-    135deg,
-    #020617 0%,
-    #581c87 50%,
-    #020617 100%
+    180deg,
+    hsl(222 24% 8%) 0%,
+    hsl(222 26% 5%) 100%
   );
   --theme-logo-bg: linear-gradient(
     135deg,
-    hsl(263, 70%, 55%),
-    hsl(245, 58%, 55%)
+    hsl(217 91% 60%),
+    hsl(231 77% 58%)
   );
-  --theme-logo-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+  --theme-logo-shadow: 0 8px 20px hsla(217, 91%, 60%, 0.35);
   --theme-text-gradient: linear-gradient(
     135deg,
-    hsl(269, 74%, 73%),
-    hsl(245, 75%, 72%)
+    hsl(210 20% 96%),
+    hsl(217 85% 75%)
   );
-  --theme-glass-bg: rgba(255, 255, 255, 0.05);
-  --theme-glass-border: rgba(255, 255, 255, 0.1);
-  --theme-glass-strong-bg: rgba(255, 255, 255, 0.1);
-  --theme-glass-strong-border: rgba(255, 255, 255, 0.2);
+  --theme-glass-bg: hsla(222, 20%, 14%, 0.5);
+  --theme-glass-border: hsla(217, 15%, 35%, 0.3);
+  --theme-glass-strong-bg: hsla(222, 20%, 16%, 0.8);
+  --theme-glass-strong-border: hsla(217, 15%, 40%, 0.4);
+}
+
+.theme-dark {
+  @extend :root;
 }
 
 .theme-light {
   --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
   --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --primary: 263 70% 50%;
+  --popover: 0 0% 100%;
+  --muted: 210 40% 96%;
+
+  --foreground: 222 30% 10%;
+  --card-foreground: 222 30% 10%;
+  --popover-foreground: 222 30% 10%;
+  --muted-foreground: 215 16% 42%;
+
+  --border: 214 25% 89%;
+  --input: 214 25% 89%;
+
+  --primary: 217 91% 52%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --ring: 263 70% 50%;
+  --secondary: 210 30% 95%;
+  --secondary-foreground: 222 30% 15%;
+  --accent: 210 30% 95%;
+  --accent-foreground: 222 30% 15%;
+  --ring: 217 91% 52%;
+
+  --success: 142 71% 38%;
+  --success-foreground: 0 0% 100%;
+  --warning: 32 95% 44%;
+  --warning-foreground: 0 0% 100%;
+  --error: 0 72% 48%;
+  --error-foreground: 0 0% 100%;
+  --info: 199 89% 42%;
+  --info-foreground: 0 0% 100%;
+  --destructive: 0 72% 48%;
+  --destructive-foreground: 0 0% 100%;
+
+  --chart-1: 217 91% 52%;
+  --chart-2: 142 71% 38%;
+  --chart-3: 32 95% 44%;
+  --chart-4: 0 72% 48%;
+  --chart-5: 262 70% 58%;
+  --chart-6: 199 89% 42%;
 
   --theme-background: #ffffff;
-  --theme-logo-bg: linear-gradient(
-    135deg,
-    hsl(263, 70%, 50%),
-    hsl(217, 91%, 60%)
-  );
-  --theme-logo-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
-  --theme-text-gradient: linear-gradient(
-    135deg,
-    hsl(263, 70%, 50%),
-    hsl(217, 91%, 60%)
-  );
+  --theme-logo-bg: linear-gradient(135deg, hsl(217, 91%, 52%), hsl(231, 77%, 50%));
+  --theme-logo-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+  --theme-text-gradient: linear-gradient(135deg, hsl(222, 30%, 15%), hsl(217, 91%, 45%));
   --theme-glass-bg: rgba(255, 255, 255, 0.9);
   --theme-glass-border: rgba(0, 0, 0, 0.1);
-  --theme-glass-strong-bg: rgba(255, 255, 255, 0.95);
-  --theme-glass-strong-border: rgba(0, 0, 0, 0.15);
-}
-
-.theme-purple {
-  --background: 232 27% 10%;
-  --foreground: 255 85% 96%;
-  --card: 247 25% 15%;
-  --card-foreground: 255 85% 96%;
-  --popover: 247 25% 15%;
-  --popover-foreground: 255 85% 96%;
-  --primary: 265 82% 50%;
-  --primary-foreground: 255 85% 96%;
-  --secondary: 247 25% 20%;
-  --secondary-foreground: 255 85% 96%;
-  --muted: 245 20% 22%;
-  --muted-foreground: 245 40% 65%;
-  --accent: 265 100% 70%;
-  --accent-foreground: 232 27% 10%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 245 20% 25%;
-  --input: 245 20% 25%;
-  --ring: 265 82% 50%;
-
-  --theme-background: linear-gradient(
-    135deg,
-    hsl(265, 80%, 50%) 0%,
-    hsl(275, 90%, 60%) 25%,
-    hsl(285, 85%, 55%) 50%,
-    hsl(295, 90%, 65%) 75%,
-    hsl(305, 95%, 70%) 100%
-  );
-  --theme-logo-bg: linear-gradient(
-    135deg,
-    hsl(265, 80%, 50%),
-    hsl(275, 90%, 60%)
-  );
-  --theme-logo-shadow: 0 8px 32px hsl(265, 80%, 50%);
-  --theme-text-gradient: linear-gradient(
-    135deg,
-    hsl(265, 80%, 85%),
-    hsl(275, 90%, 95%)
-  );
-}
-
-.theme-light {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 10% 3.9%;
-
-  --theme-background: linear-gradient(
-    135deg,
-    hsl(200, 100%, 98%) 0%,
-    hsl(210, 50%, 96%) 25%,
-    hsl(220, 30%, 94%) 50%,
-    hsl(230, 20%, 92%) 75%,
-    hsl(240, 15%, 90%) 100%
-  );
-  --theme-logo-bg: linear-gradient(
-    135deg,
-    hsl(210, 60%, 25%),
-    hsl(220, 70%, 35%)
-  );
-  --theme-logo-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
-  --theme-text-gradient: linear-gradient(
-    135deg,
-    hsl(210, 60%, 35%),
-    hsl(220, 70%, 45%)
-  );
+  --theme-glass-strong-bg: rgba(255, 255, 255, 0.97);
+  --theme-glass-strong-border: rgba(0, 0, 0, 0.12);
 }

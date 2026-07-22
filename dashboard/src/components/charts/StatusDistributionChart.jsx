@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import Chart from 'react-apexcharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui';
 import { useChartTheme } from '../../hooks/useChartTheme';
+import { chartPalette } from '../../lib/chartPalette';
 import styles from '../../styles/modules/charts/Charts.module.scss';
 
 export function StatusDistributionChart({ data }) {
@@ -11,7 +12,7 @@ export function StatusDistributionChart({ data }) {
         chart: { type: 'donut', background: 'transparent' },
         theme: { mode: chart.mode },
         labels: data?.labels ?? ['Success', 'Client Error', 'Server Error'],
-        colors: ['#10b981', '#f59e0b', '#ef4444'],
+        colors: [chartPalette.green, chartPalette.amber, chartPalette.red],
         dataLabels: {
             enabled: true,
             style: { fontSize: '14px', fontWeight: 'bold' },

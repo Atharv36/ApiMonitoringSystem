@@ -2,7 +2,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { Check, Palette, Moon, Sun } from 'lucide-react';
 import styles from '../styles/modules/ThemeSelector.module.scss';
 
-const THEME_ICONS = { light: Sun, purple: Moon };
+const THEME_ICONS = { light: Sun, dark: Moon };
 
 export function ThemeSelector() {
     const { currentTheme, themes, switchTheme } = useTheme();

@@ -1,12 +1,13 @@
 .container {
     min-height: 100vh;
+    background: hsl(var(--background));
 
-    &.themePurple {
-        background: linear-gradient(to bottom right, #020617, #581c87, #020617);
+    &.themeDark {
+        background: var(--theme-background);
     }
 
     &.themeLight {
-        background: linear-gradient(to bottom right, #f9fafb, #ffffff);
+        background: var(--theme-background);
     }
 }
 
