@@ -3,8 +3,11 @@ import { cn } from '../../lib/utils.js';
 import {
     LayoutDashboard,
     Settings,
+    Users,
+    KeyRound,
     Zap,
 } from 'lucide-react';
+import { useProfileQuery } from '../../hooks/useProfileQuery';
 import styles from '../../styles/modules/layout/Sidebar.module.scss';
 
 const navItems = [
@@ -16,6 +19,8 @@ const navItems = [
     },
 ];
 
+const ADMIN_ROLES = ['super_admin', 'client_admin'];
+
 const bottomNavItems = [
     {
         title: 'Settings',
@@ -26,6 +31,33 @@ const bottomNavItems = [
 ];
 
 export function Sidebar({ isOpen, onClose }) {
+    const { data: profile } = useProfileQuery();
+    const role = profile?.data?.role;
+    const isAdmin = ADMIN_ROLES.includes(role);
+
+    const visibleNavItems = [
+        ...navItems,
+        // Team Management (onboarding orgs/users) has nothing a client_viewer
+        // can do, so it's hidden entirely for that role.
+        ...(isAdmin
+            ? [{
+                title: 'Team Management',
+                href: '/team',
+                icon: Users,
+                description: 'Onboard organizations and manage client users'
+            }]
+            : []),
+        // API Management stays visible to every role: creating keys is
+        // admin-only, but the backend allows any role to view keys scoped
+        // to their own client, including client_viewer.
+        {
+            title: 'API Management',
+            href: '/api-management',
+            icon: KeyRound,
+            description: 'Issue and review API keys'
+        },
+    ];
+
     return (
         <>
             {isOpen && (
@@ -47,12 +79,12 @@ export function Sidebar({ isOpen, onClose }) {
                         </div>
                         <div className={styles.logoText}>
                             <h2 className="theme-text-gradient">API Monitor</h2>
-                            <p>By Code Architecture</p>
+                            <p></p>
                         </div>
                     </div>
                     <nav className={styles.navigation} aria-label="Main navigation">
                         <div className={styles.navList}>
-                            {navItems.map((item) => {
+                            {visibleNavItems.map((item) => {
                                 const Icon = item.icon;
                                 return (
                                     <NavLink

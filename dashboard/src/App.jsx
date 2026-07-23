@@ -21,6 +21,18 @@ default: m.SettingsPage,
 }))
 );
 
+const TeamManagementPage = lazy(() =>
+import('./pages/TeamManagementPage').then((m) => ({
+default: m.TeamManagementPage,
+}))
+);
+
+const ApiManagementPage = lazy(() =>
+import('./pages/ApiManagementPage').then((m) => ({
+default: m.ApiManagementPage,
+}))
+);
+
 const pageFallback = (
 <div
 style={{
@@ -109,6 +121,8 @@ return (
         <Suspense fallback={pageFallback}>
             <Routes>
                 <Route path="/" element={<OverviewPage />} />
+                <Route path="/team" element={<TeamManagementPage />} />
+                <Route path="/api-management" element={<ApiManagementPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route
                     path="*"

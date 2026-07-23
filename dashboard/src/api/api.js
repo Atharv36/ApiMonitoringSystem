@@ -93,19 +93,23 @@ export const clientApi = {
         return response.data;
     },
     createClient: async (clientData) => {
-        const response = await api.post('/admin/clients', clientData);
+        const response = await api.post('/admin/clients/onboard', clientData);
         return response.data;
     },
     getClients: async (params) => {
         const response = await api.get('/admin/clients', { params });
         return response.data;
     },
+    createClientUser: async (clientId, userData) => {
+        const response = await api.post(`/admin/clients/${clientId}/users`, userData);
+        return response.data;
+    },
     createApiKey: async (clientId, keyData) => {
-        const response = await api.post(`/admin/clients/${clientId}/api-keys`, keyData);
+        const response = await api.post(`/admin/clients/${clientId}/api/keys`, keyData);
         return response.data;
     },
     getClientApiKeys: async (clientId) => {
-        const response = await api.get(`/admin/clients/${clientId}/api-keys`);
+        const response = await api.get(`/admin/clients/${clientId}/api/keys`);
         return response.data;
     },
 };
