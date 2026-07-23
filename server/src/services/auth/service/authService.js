@@ -112,7 +112,7 @@ export class AuthService {
 
         const isPasswordValid = await this.comparePassword(password, user.password);
 
-        if (!isPasswordValid) return new AppError("Invalid Credentails", 401);
+        if (!isPasswordValid) throw new AppError("Invalid Credentails", 401);
         const token = this.generateToken(user);
         logger.info("User Logged In Successfully", { username: user.username });
 
