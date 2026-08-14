@@ -23,6 +23,7 @@ const config = {
         database: process.env.PG_DATABASE || 'api_monitoring',
         user: process.env.PG_USER || 'postgres',
         password: process.env.PG_PASSWORD || 'atharv',
+        ssl: process.env.PG_SSL === 'true',
     },
 
     //RabbitMQ
