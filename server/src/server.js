@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 app.use(helmet());
 app.use(cors({
-    origin: true,
+    origin: config.cors.origin,
     credentials: true
 }));
 app.use(cookieParser())

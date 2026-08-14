@@ -51,6 +51,12 @@ const config = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         expiresIn:24*60*60*1000
+    },
+
+    cors: {
+        // Must be an exact origin (not '*') for credentialed cookie requests
+        // to work per the CORS spec.
+        origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
     }
 
 

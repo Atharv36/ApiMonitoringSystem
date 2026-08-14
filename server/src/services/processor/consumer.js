@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import express from 'express';
 import rabbitmq from '../../shared/config/rabbitmq.js';
 import mongodb from '../../shared/config/mongodb.js';
 import postgres from '../../shared/config/postgres.js';
@@ -349,6 +350,21 @@ async function startConsumerWithRetry() {
         }
     }
 }
+
+// The consumer has no HTTP surface of its own — this exists purely so
+// free-tier hosts that only run HTTP "web services" (e.g. Render) have
+// something to health-check; it doesn't participate in message processing.
+const healthApp = express();
+healthApp.get('/health', (req, res) => {
+    res.status(consumer.isRunning ? 200 : 503).json({
+        status: consumer.isRunning ? 'healthy' : 'starting',
+        stats: consumer._stats,
+    });
+});
+const HEALTH_PORT = config.port || 5000;
+healthApp.listen(HEALTH_PORT, () => {
+    logger.info(`Consumer health check listening on port ${HEALTH_PORT}`);
+});
 
 process.on('SIGINT', async () => {
     logger.info('Received SIGINT, shutting down gracefully...');

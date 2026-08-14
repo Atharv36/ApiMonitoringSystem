@@ -15,5 +15,9 @@ COPY . .
 # Create logs directory
 RUN mkdir -p logs
 
+# Exposes the health-check endpoint only — the consumer itself talks to
+# RabbitMQ, not HTTP.
+EXPOSE 5000
+
 # Start the consumer (correct path)
 CMD ["node", "src/services/processor/consumer.js"]
