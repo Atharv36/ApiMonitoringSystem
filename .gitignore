@@ -17,6 +17,8 @@ lerna-debug.log*
 !.env.example
 !.env.local.example
 
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
