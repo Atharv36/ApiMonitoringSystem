@@ -28,7 +28,7 @@ class RabbitMQConnection {
 
             try {
                 this.isConnecting = true;
-                logger.info("Connecting to RabbitMQ", config.rabbitmq.url)
+                logger.info("Connecting to RabbitMQ", { url: config.rabbitmq.url })
                 
                 this.connection = await ampq.connect(config.rabbitmq.url)
                 this.channel = await this.connection.createChannel();
@@ -50,7 +50,7 @@ class RabbitMQConnection {
                     }
                 })
 
-                    logger.info("RabbitMQ connected queue : ",config.rabbitmq.queue)
+                    logger.info("RabbitMQ connected", { queue: config.rabbitmq.queue })
 
                 this.connection.on("close", () => {
                     logger.warn("RabbitMQ Connection Closed")

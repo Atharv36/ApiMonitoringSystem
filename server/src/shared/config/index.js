@@ -51,6 +51,11 @@ const config = {
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
+        // 'none' is required for the cookie to be sent on cross-site
+        // requests (e.g. a Vercel frontend calling a Render backend) —
+        // browsers require Secure whenever SameSite is 'none'. Locally,
+        // frontend and backend are same-site, so 'lax' is fine there.
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         expiresIn:24*60*60*1000
     },
 

@@ -22,6 +22,7 @@ export class AuthController{
             res.cookie("authToken", token, {
                 httpOnly: config.cookie.httpOnly,
                 secure: config.cookie.secure,
+                sameSite: config.cookie.sameSite,
                 maxAge: config.cookie.expiresIn
             });
 
@@ -45,6 +46,7 @@ export class AuthController{
             res.cookie("authToken", token, {
                 httpOnly: config.cookie.httpOnly,
                 secure: config.cookie.secure,
+                sameSite: config.cookie.sameSite,
                 maxAge: config.cookie.expiresIn
             });
 
@@ -62,6 +64,7 @@ export class AuthController{
             res.cookie("authToken", token, {
                 httpOnly: config.cookie.httpOnly,
                 secure: config.cookie.secure,
+                sameSite: config.cookie.sameSite,
                 maxAge: config.cookie.expiresIn
             });
 
@@ -84,7 +87,11 @@ export class AuthController{
 
     async logout(req, res, next) {
         try {
-            res.clearCookie("authToken");
+            res.clearCookie("authToken", {
+                httpOnly: config.cookie.httpOnly,
+                secure: config.cookie.secure,
+                sameSite: config.cookie.sameSite,
+            });
             res.status(200).json(ResponseFormatter.success({} ,"Logged Out Successfully",200))
         } catch (error) {
             next(error)
