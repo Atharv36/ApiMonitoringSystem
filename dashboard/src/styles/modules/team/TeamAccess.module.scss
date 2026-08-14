@@ -97,14 +97,42 @@
 
 .keyItem {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
     padding: 0.875rem 1rem;
     border-radius: var(--radius);
     border: 1px solid hsl(var(--border) / 0.6);
     background: hsl(var(--card) / 0.5);
+}
+
+.keyItemRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     flex-wrap: wrap;
+}
+
+.confirmSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--error) / 0.3);
+    background: hsl(var(--error) / 0.08);
+}
+
+.confirmText {
+    font-size: 0.8rem;
+    color: hsl(var(--foreground));
+    margin: 0;
+}
+
+.confirmActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
 }
 
 .keyItemInfo {
@@ -129,6 +157,12 @@
     align-items: center;
     gap: 0.5rem;
     flex-shrink: 0;
+}
+
+.deleteIcon {
+    width: 1rem;
+    height: 1rem;
+    color: hsl(var(--error));
 }
 
 .emptyNote {

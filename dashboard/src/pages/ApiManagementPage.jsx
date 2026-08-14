@@ -49,7 +49,7 @@ export function ApiManagementPage() {
                 />
             )}
 
-            <ApiKeysList clientId={clientId} />
+            <ApiKeysList clientId={clientId} canManageKeys={canManageKeys} />
         </div>
     );
 }

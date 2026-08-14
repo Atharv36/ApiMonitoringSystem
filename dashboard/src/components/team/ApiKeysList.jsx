@@ -1,11 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { clientApi } from '../../api/api';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from '../ui';
-import { ListChecks } from 'lucide-react';
+import { useToast } from '../../contexts/ToastContext';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Button } from '../ui';
+import { ListChecks, Trash2 } from 'lucide-react';
 import { QUERY_KEYS } from '../../constants';
 import styles from '../../styles/modules/team/TeamAccess.module.scss';
 
-export function ApiKeysList({ clientId }) {
+export function ApiKeysList({ clientId, canManageKeys }) {
+    const addToast = useToast();
+    const queryClient = useQueryClient();
+    const [confirmingId, setConfirmingId] = useState(null);
+
     const { data, isLoading, error } = useQuery({
         queryKey: [...QUERY_KEYS.API_KEYS, clientId],
         queryFn: () => clientApi.getClientApiKeys(clientId),
@@ -13,6 +19,18 @@ export function ApiKeysList({ clientId }) {
     });
 
     const keys = data?.data ?? [];
+
+    const deactivateMutation = useMutation({
+        mutationFn: (apiKeyId) => clientApi.deactivateApiKey(clientId, apiKeyId),
+        onSuccess: () => {
+            addToast('API key deactivated', 'success');
+            setConfirmingId(null);
+            queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS.API_KEYS, clientId] });
+        },
+        onError: (err) => {
+            addToast(err.response?.data?.message || 'Failed to deactivate API key', 'error');
+        },
+    });
 
     return (
         <Card>
@@ -34,22 +52,68 @@ export function ApiKeysList({ clientId }) {
                 )}
                 {keys.length > 0 && (
                     <div className={styles.keyList}>
-                        {keys.map((key) => (
-                            <div key={key._id || key.keyId} className={styles.keyItem}>
-                                <div className={styles.keyItemInfo}>
-                                    <span className={styles.keyItemName}>{key.name}</span>
-                                    <span className={styles.keyItemMeta}>
-                                        {key.environment}
-                                        {key.createdAt ? ` · created ${new Date(key.createdAt).toLocaleDateString()}` : ''}
-                                    </span>
+                        {keys.map((key) => {
+                            const keyId = key._id || key.keyId;
+                            const isConfirming = confirmingId === keyId;
+
+                            return (
+                                <div key={keyId} className={styles.keyItem}>
+                                    <div className={styles.keyItemRow}>
+                                        <div className={styles.keyItemInfo}>
+                                            <span className={styles.keyItemName}>{key.name}</span>
+                                            <span className={styles.keyItemMeta}>
+                                                {key.environment}
+                                                {key.createdAt ? ` · created ${new Date(key.createdAt).toLocaleDateString()}` : ''}
+                                            </span>
+                                        </div>
+                                        <div className={styles.keyItemBadges}>
+                                            <Badge variant={key.isActive ? 'success' : 'secondary'}>
+                                                {key.isActive ? 'Active' : 'Inactive'}
+                                            </Badge>
+                                            {canManageKeys && key.isActive && !isConfirming && (
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    aria-label={`Deactivate ${key.name}`}
+                                                    onClick={() => setConfirmingId(keyId)}
+                                                >
+                                                    <Trash2 className={styles.deleteIcon} aria-hidden="true" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {isConfirming && (
+                                        <section className={styles.confirmSection} aria-label="Confirm key deactivation">
+                                            <p className={styles.confirmText}>
+                                                Deactivate &quot;{key.name}&quot;? Any client using this key will immediately lose ingest access.
+                                            </p>
+                                            <div className={styles.confirmActions}>
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() => setConfirmingId(null)}
+                                                    disabled={deactivateMutation.isPending}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                                <Button
+                                                    type="button"
+                                                    variant="destructive"
+                                                    size="sm"
+                                                    onClick={() => deactivateMutation.mutate(keyId)}
+                                                    disabled={deactivateMutation.isPending}
+                                                >
+                                                    {deactivateMutation.isPending ? 'Deactivating...' : 'Deactivate Key'}
+                                                </Button>
+                                            </div>
+                                        </section>
+                                    )}
                                 </div>
-                                <div className={styles.keyItemBadges}>
-                                    <Badge variant={key.isActive ? 'success' : 'secondary'}>
-                                        {key.isActive ? 'Active' : 'Inactive'}
-                                    </Badge>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </CardContent>

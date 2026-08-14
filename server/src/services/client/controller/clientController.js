@@ -74,6 +74,16 @@ export class ClientController{
             next(error)
         }
     }
+
+    async deactivateApiKey(req, res, next) {
+        try {
+            const { clientId, apiKeyId } = req.params;
+            const apiKey = await this.clientService.deactivateApiKey(clientId, apiKeyId, req.user);
+            return res.status(200).json(ResponseFormatter.success(apiKey, "API key deactivated successfully", 200))
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 

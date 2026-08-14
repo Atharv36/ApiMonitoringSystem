@@ -1,6 +1,5 @@
 import axios from 'axios';
-// import.meta?.env?.VITE_API_BASE_URL ?? 
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -41,8 +40,6 @@ export const authApi = {
         const response = await api.put('/auth/profile', profileData);
         return response.data;
     },
-
-    
 
 };
 
@@ -110,6 +107,10 @@ export const clientApi = {
     },
     getClientApiKeys: async (clientId) => {
         const response = await api.get(`/admin/clients/${clientId}/api/keys`);
+        return response.data;
+    },
+    deactivateApiKey: async (clientId, apiKeyId) => {
+        const response = await api.delete(`/admin/clients/${clientId}/api/keys/${apiKeyId}`);
         return response.data;
     },
 };

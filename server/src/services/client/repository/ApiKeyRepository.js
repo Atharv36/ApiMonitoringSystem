@@ -84,6 +84,26 @@ class MongoApiKeyRepository extends BaseApiKeyRepository{
             throw error;
         }
     }
+
+    /**
+     * Soft-delete an API key by marking it inactive, scoped to its client
+     * @param {string} apiKeyId - API key document _id
+     * @param {string} clientId - Client ID the key must belong to
+     * @returns {Promise<Object|null>}
+     */
+    async deactivate(apiKeyId, clientId) {
+        try {
+            const apiKey = await this.model.findOneAndUpdate(
+                { _id: apiKeyId, clientId },
+                { isActive: false },
+                { new: true }
+            );
+            return apiKey;
+        } catch (error) {
+            logger.error('Error deactivating API key:', error);
+            throw error;
+        }
+    }
 }
 
 export default new MongoApiKeyRepository()
