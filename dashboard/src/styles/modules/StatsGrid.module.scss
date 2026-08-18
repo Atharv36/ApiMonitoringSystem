@@ -1,0 +1,189 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.statCard {
+    transition: all 300ms ease;
+    border: 1px solid hsl(var(--border) / 0.5);
+    background: hsl(var(--card) / 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    // Dynamic animation delay will be set via inline style
+}
+
+.cardContent {
+    padding: 1.5rem;
+}
+
+.contentLayout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.textContent {
+    flex: 1 1 0%;
+}
+
+.title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.value {
+    font-size: 1.875rem; // text-3xl
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+}
+
+.subtitle {
+    font-size: 0.75rem; // text-xs
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.iconContainer {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    transition: transform 300ms ease;
+
+    .statCard:hover & {
+        transform: scale(1.1);
+    }
+
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+.progressBar {
+    margin-top: 1rem;
+    height: 0.25rem;
+    width: 100%;
+    border-radius: 9999px;
+    opacity: 0.5;
+    transition: opacity 300ms ease;
+
+    .statCard:hover & {
+        opacity: 1;
+    }
+}
+
+// Value text color — one semantic chart token per KPI card
+.gradientBlue {
+    color: hsl(var(--chart-1));
+}
+
+.gradientPurple {
+    color: hsl(var(--chart-5));
+}
+
+.gradientRed {
+    color: hsl(var(--error));
+}
+
+.gradientGreen {
+    color: hsl(var(--success));
+}
+
+.gradientIndigo {
+    color: hsl(var(--chart-6));
+}
+
+.gradientYellow {
+    color: hsl(var(--chart-3));
+}
+
+// Background colors for icon containers
+.bgBlue {
+    background-color: hsl(var(--chart-1) / 0.12);
+}
+
+.bgPurple {
+    background-color: hsl(var(--chart-5) / 0.12);
+}
+
+.bgRed {
+    background-color: hsl(var(--error) / 0.12);
+}
+
+.bgGreen {
+    background-color: hsl(var(--success) / 0.12);
+}
+
+.bgIndigo {
+    background-color: hsl(var(--chart-6) / 0.12);
+}
+
+.bgYellow {
+    background-color: hsl(var(--chart-3) / 0.12);
+}
+
+// Text colors for icons
+.textBlue {
+    color: hsl(var(--chart-1));
+}
+
+.textPurple {
+    color: hsl(var(--chart-5));
+}
+
+.textRed {
+    color: hsl(var(--error));
+}
+
+.textGreen {
+    color: hsl(var(--success));
+}
+
+.textIndigo {
+    color: hsl(var(--chart-6));
+}
+
+.textYellow {
+    color: hsl(var(--chart-3));
+}
+
+// Progress bar backgrounds
+.progressBlue {
+    background: hsl(var(--chart-1));
+}
+
+.progressPurple {
+    background: hsl(var(--chart-5));
+}
+
+.progressRed {
+    background: hsl(var(--error));
+}
+
+.progressGreen {
+    background: hsl(var(--success));
+}
+
+.progressIndigo {
+    background: hsl(var(--chart-6));
+}
+
+.progressYellow {
+    background: hsl(var(--chart-3));
+}

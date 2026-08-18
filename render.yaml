@@ -1,0 +1,72 @@
+services:
+  - type: web
+    name: api-monitoring-api
+    runtime: docker
+    plan: free
+    dockerfilePath: server/Dockerfile
+    dockerContext: server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB_NAME
+        value: api_monitoring
+      - key: PG_HOST
+        sync: false
+      - key: PG_PORT
+        value: "5432"
+      - key: PG_DATABASE
+        sync: false
+      - key: PG_USER
+        sync: false
+      - key: PG_PASSWORD
+        sync: false
+      - key: RABBITMQ_URL
+        sync: false
+      - key: RABBITMQ_QUEUE
+        value: api_hits
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: CORS_ORIGIN
+        sync: false
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "1000"
+
+  - type: web
+    name: api-monitoring-consumer
+    runtime: docker
+    plan: free
+    dockerfilePath: server/Dockerfile.consumer
+    dockerContext: server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB_NAME
+        value: api_monitoring
+      - key: PG_HOST
+        sync: false
+      - key: PG_PORT
+        value: "5432"
+      - key: PG_DATABASE
+        sync: false
+      - key: PG_USER
+        sync: false
+      - key: PG_PASSWORD
+        sync: false
+      - key: RABBITMQ_URL
+        sync: false
+      - key: RABBITMQ_QUEUE
+        value: api_hits

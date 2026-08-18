@@ -1,0 +1,234 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--theme-background);
+    position: relative;
+    overflow: hidden;
+}
+
+.backgroundElements {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.backgroundOrb {
+    position: absolute;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 50%;
+    filter: blur(5rem);
+    opacity: 0.12;
+    background-color: hsl(var(--primary));
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    &.orb1 {
+        top: -8rem;
+        right: -8rem;
+    }
+
+    &.orb2 {
+        bottom: -10rem;
+        left: -10rem;
+        animation-delay: 1.5s;
+    }
+
+    &.orb3 {
+        display: none;
+    }
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 26rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.25rem);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.4s ease-in-out;
+    position: relative;
+    z-index: 10;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 2rem 2rem 0;
+}
+
+.logoContainer {
+    margin: 0 auto;
+    width: 3.25rem;
+    height: 3.25rem;
+    background: var(--theme-logo-bg);
+    border-radius: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--theme-logo-shadow);
+
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+    }
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    margin: 0;
+}
+
+.description {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.cardContent {
+    padding: 1.5rem 2rem 2rem;
+}
+
+.errorMessage {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    background-color: hsl(var(--error) / 0.1);
+    border: 1px solid hsl(var(--error) / 0.3);
+    color: hsl(var(--error));
+    font-size: 0.875rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+}
+
+.inputContainer {
+    position: relative;
+
+    svg {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1rem;
+        height: 1rem;
+        color: hsl(var(--muted-foreground));
+    }
+}
+
+.input {
+    width: 100%;
+    padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder {
+        color: hsl(var(--muted-foreground));
+    }
+
+    &:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.15);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.submitButton {
+    width: 100%;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    &:hover:not(:disabled) {
+        background: hsl(var(--primary) / 0.9);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.3);
+    }
+}
+
+.buttonContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+/* Light theme adjustments */
+:global(.theme-light) {
+    .backgroundOrb {
+        opacity: 0.08;
+    }
+
+    .loginCard {
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.06;
+    }
+}

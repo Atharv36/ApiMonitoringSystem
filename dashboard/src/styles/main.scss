@@ -1,0 +1,6 @@
+// Entry point for global styles — imported once from src/main.jsx.
+// Order matters: colors defines the CSS custom properties every other
+// partial (and every component module) consumes via hsl(var(--token)).
+@use "colors";
+@use "base";
+@use "animations";

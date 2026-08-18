@@ -1,0 +1,55 @@
+import { useState } from 'react';
+import { useProfileQuery } from '../hooks/useProfileQuery';
+import { CreateApiKeyForm } from '../components/team/CreateApiKeyForm';
+import { ApiKeysList } from '../components/team/ApiKeysList';
+import { PageStatus } from '../components/ui';
+import { getLastClientId, setLastClientId } from '../lib/lastClientId';
+import styles from '../styles/modules/pages/PageComponents.module.scss';
+
+export function ApiManagementPage() {
+    const { data, isPending, error, refetch } = useProfileQuery();
+    const profile = data?.data ?? null;
+    const [activeClientId, setActiveClientId] = useState(() => getLastClientId());
+
+    if (isPending || error || !profile) {
+        return (
+            <PageStatus
+                isLoading={isPending || !profile}
+                error={error}
+                onRetry={refetch}
+                loadingText="Loading account details..."
+                errorText="Failed to load account details"
+            />
+        );
+    }
+
+    const isSuperAdmin = profile.role === 'super_admin';
+    // Creating keys is restricted to admins on the backend; viewing keys is
+    // allowed for any role scoped to their own client, including client_viewer.
+    const canManageKeys = profile.role === 'super_admin' || profile.role === 'client_admin';
+    const clientId = isSuperAdmin ? activeClientId : profile.clientId;
+
+    const handleClientIdChange = (value) => {
+        setActiveClientId(value);
+        setLastClientId(value);
+    };
+
+    return (
+        <div className={styles.pageContainer}>
+            <div className={styles.pageHeader}>
+                <h2>API Management</h2>
+                <p>Issue and review API keys for client organizations</p>
+            </div>
+
+            {canManageKeys && (
+                <CreateApiKeyForm
+                    isSuperAdmin={isSuperAdmin}
+                    clientId={clientId}
+                    onClientIdChange={handleClientIdChange}
+                />
+            )}
+
+            <ApiKeysList clientId={clientId} canManageKeys={canManageKeys} />
+        </div>
+    );
+}
